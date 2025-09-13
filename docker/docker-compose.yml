@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres12:
+    image: postgres:12
+    container_name: postgres12_simulation
+    environment:
+      POSTGRES_DB: postgres_simulation
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres12_data:/var/lib/postgresql/data
+      - ../database:/docker-entrypoint-initdb.d
+    command: >
+      postgres
+      -c shared_preload_libraries=pg_stat_statements
+      -c pg_stat_statements.track=all
+
+  postgres17:
+    image: postgres:17
+    container_name: postgres17_simulation
+    environment:
+      POSTGRES_DB: postgres_simulation
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres17_data:/var/lib/postgresql/data
+    profiles:
+      - upgrade
+    command: >
+      postgres
+      -c shared_preload_libraries=pg_stat_statements
+      -c pg_stat_statements.track=all
+
+volumes:
+  postgres12_data:
+  postgres17_data:
