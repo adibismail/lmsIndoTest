@@ -24,7 +24,7 @@ SELECT
     (SELECT id FROM users ORDER BY RANDOM() LIMIT 1),
     (ARRAY['login', 'logout', 'view_product', 'purchase', 'search'])[floor(random() * 5 + 1)],
     '{"page": "dashboard"}',
-    '192.168.1.' || floor(random() * 255 + 1)::text,
+    ('192.168.1.' || floor(random() * 255 + 1)::text)::inet,
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
     NOW() - (random() * interval '30 days')
 FROM generate_series(1, 1000);

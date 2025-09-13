@@ -9,7 +9,7 @@ function Login({ setUser }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://192.168.1.181:3001/api/auth/login', {
+      const response = await axios.post('http://localhost:3001/api/auth/login', {
         username,
         password
       });
