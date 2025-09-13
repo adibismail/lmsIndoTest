@@ -19,7 +19,7 @@ INSERT INTO products (name, description, price, category_id, stock_quantity) VAL
 ('Basketball', 'Professional basketball', 39.99, 5, 25);
 
 -- Insert sample analytics events
-INSERT INTO analytics (user_id, event_type, event_data, ip_address, user_agent) 
+INSERT INTO analytics (user_id, event_type, event_data, ip_address, user_agent, created_at) 
 SELECT 
     (SELECT id FROM users ORDER BY RANDOM() LIMIT 1),
     (ARRAY['login', 'logout', 'view_product', 'purchase', 'search'])[floor(random() * 5 + 1)],

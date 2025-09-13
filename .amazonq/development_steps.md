@@ -11,6 +11,8 @@
 - [x] Add required PostgreSQL extensions (uuid-ossp, pg_stat_statements)
 - [x] Create seed data with test users and sample records
 - [x] Add performance indexes
+- [x] Fix PostgreSQL 12 compatibility issues (gen_random_uuid → uuid_generate_v4)
+- [x] Fix seed data column mapping for analytics table
 - [ ] Create migration scripts for PostgreSQL 17 upgrade
 - [ ] Add data validation queries
 
@@ -64,17 +66,35 @@
 - [ ] Production environment configuration
 
 ## Current Status
-**Completed**: Basic application structure with authentication, dashboard, and product management
-**Next Steps**: Add JWT middleware, error handling, and migration scripts
-**Blockers**: None identified
+**Completed**: 
+- Basic application structure with authentication, dashboard, and product management
+- PostgreSQL 12 database setup with proper schema and seed data
+- Fixed compatibility issues with UUID generation and data types
+
+**Current Issues**:
+- Backend server port conflicts preventing startup
+- Connection refused errors when frontend tries to reach backend API
+- Need to resolve process management for concurrent frontend/backend startup
+
+**Next Steps**: 
+- Resolve port conflicts and process management
+- Ensure backend server starts successfully
+- Add JWT middleware, error handling, and migration scripts
+
+**Blockers**: Port 3001 conflicts preventing backend server startup
 
 ## Quick Start Commands
 ```bash
 # Start PostgreSQL 12
-cd docker && docker-compose up -d postgres12
+cd docker && docker compose up -d postgres12
 
 # Install dependencies
 npm run setup
+
+# Kill any existing processes on ports 3000/3001
+pkill -f node
+lsof -ti:3000 | xargs -r kill -9
+lsof -ti:3001 | xargs -r kill -9
 
 # Start application
 npm run dev
@@ -82,6 +102,11 @@ npm run dev
 # Access: http://localhost:3000
 # Test users: admin/admin, manager/manager, user/user
 ```
+
+## Troubleshooting
+- **Database Issues**: Fixed UUID function compatibility (PostgreSQL 12 uses uuid_generate_v4)
+- **Port Conflicts**: Use `pkill -f node` to kill existing Node processes
+- **Connection Refused**: Ensure backend starts on port 3001 before frontend connects
 
 ## Migration Testing Commands
 ```bash

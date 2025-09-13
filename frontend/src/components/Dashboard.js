@@ -14,7 +14,7 @@ function Dashboard({ user }) {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/dashboard/stats');
+      const response = await axios.get('http://192.168.1.181:3001/api/dashboard/stats');
       setStats(response.data);
     } catch (error) {
       console.error('Error fetching stats:', error);
@@ -23,7 +23,7 @@ function Dashboard({ user }) {
 
   const fetchAnalytics = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/dashboard/analytics');
+      const response = await axios.get('http://192.168.1.181:3001/api/dashboard/analytics');
       setAnalytics(response.data);
     } catch (error) {
       console.error('Error fetching analytics:', error);
